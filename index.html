@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔮 Ramalan Spiritual</title>
+    <style>
+        :root {
+            --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --accent: linear-gradient(45deg, #ff6b6b, #feca57);
+            --dark: #1a1a2e;
+            --glass: rgba(255,255,255,0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', -apple-system, sans-serif;
+            background: var(--primary);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .container { max-width: 500px; margin: 0 auto; padding: 20px; }
+        .header {
+            text-align: center; 
+            margin: 40px 0 30px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow { 0% { text-shadow: 0 0 20px #fff; } 100% { text-shadow: 0 0 30px #ff6b6b; } }
+        .tabs {
+            display: flex; background: var(--glass); backdrop-filter: blur(20px);
+            border-radius: 20px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        .tab-btn {
+            flex: 1; padding: 18px; border: none; background: transparent;
+            color: rgba(255,255,255,0.8); font-weight: 600; cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active { background: var(--accent); color: white; }
+        .tab-content {
+            display: none; background: var(--glass); backdrop-filter: blur(20px);
+            padding: 30px; border-radius: 25px; margin: 25px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .tab-content.active { display: block; }
+        .quick-dates {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px; margin: 25px 0;
+        }
+        .date-btn {
+            padding: 15px; border: none; border-radius: 15px; background: var(--glass);
+            color: white; font-weight: 500; cursor: pointer; transition: all 0.3s;
+            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);
+        }
+        .date-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        input {
+            width: 100%; padding: 18px; border: none; border-radius: 15px;
+            background: rgba(255,255,255,0.15); color: white; font-size: 16px;
+            backdrop-filter: blur(10px); border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        input:focus { outline: none; border-color: #ff6b6b; box-shadow: 0 0 20px rgba(255,107,107,0.3); }
+        input::placeholder { color: rgba(255,255,255,0.7); }
+        .ramal-btn {
+            width: 100%; padding: 18px; margin: 20px 0; border: none; border-radius: 15px;
+            background: var(--accent); color: white; font-size: 18px; font-weight: bold;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .ramal-btn:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(255,107,107,0.4); }
+        .result {
+            margin-top: 30px; padding: 30px; border-radius: 20px; text-align: center;
+            background: rgba(255,255,255,0.15); min-height: 120px;
+            backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.3);
+        }
+        .emoji { font-size: 60px; margin: 15px 0; }
+        .khodam-name { font-size: 28px; margin: 10px 0; }
+        .desc { font-size: 16px; opacity: 0.9; margin: 15px 0; }
+        .match { color: #feca57; font-size: 24px; font-weight: bold; }
+        .partner { background: rgba(255,255,255,0.2); padding: 25px; border-radius: 20px; margin: 20px 0; }
+        
+        /* FOOTER DEVELOPER */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px 20px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .developer {
+            font-size: 16px;
+            font-weight: 600;
+            color: #feca57;
+            margin-bottom: 5px;
+        }
+        .contact {
+            font-size: 14px;
+            opacity: 0.8;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        @media (max-width: 480px) {
+            .tabs { flex-direction: column; }
+            .quick-dates { grid-template-columns: repeat(2, 1fr); }
+            .container { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="header">🔮 Ramalan Spiritual</h1>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('khodam')">🛡️ Tes Khodam</button>
+            <button class="tab-btn" onclick="switchTab('jodoh')">💞 Ramal Jodoh</button>
+        </div>
+
+        <div id="khodamTab" class="tab-content active">
+            <p style="text-align: center; margin-bottom: 10px;">Pilih tanggal lahir Anda:</p>
+            <div class="quick-dates">
+                <button class="date-btn" onclick="setDate('khodam', '12/04/1997')">12 Apr 1997</button>
+                <button class="date-btn" onclick="setDate('khodam', '25/12/1995')">25 Des 1995</button>
+                <button class="date-btn" onclick="setDate('khodam', '01/01/2000')">1 Jan 2000</button>
+                <button class="date-btn" onclick="setDate('khodam', '15/08/1998')">15 Ags 1998</button>
+                <button class="date-btn" onclick="setDate('khodam', '30/06/1996')">30 Jun 1996</button>
+                <button class="date-btn" onclick="setDate('khodam', '22/11/1999')">22 Nov 1999</button>
+            </div>
+            <input type="text" id="birthdate" placeholder="Atau ketik: DD/MM/YYYY">
+            <button class="ramal-btn" onclick="cekKhodam()">🔮 Cek Khodam</button>
+            <div id="result" class="result"></div>
+        </div>
+
+        <div id="jodohTab" class="tab-content">
+            <p style="text-align: center; margin-bottom: 10px;">Pilih tanggal lahir Anda:</p>
+            <div class="quick-dates">
+                <button class="date-btn" onclick="setDate('jodoh', '12/04/1997')">12 Apr 1997</button>
+                <button class="date-btn" onclick="setDate('jodoh', '25/12/1995')">25 Des 1995</button>
+                <button class="date-btn" onclick="setDate('jodoh', '01/01/2000')">1 Jan 2000</button>
+                <button class="date-btn" onclick="setDate('jodoh', '15/08/1998')">15 Ags 1998</button>
+                <button class="date-btn" onclick="setDate('jodoh', '30/06/1996')">30 Jun 1996</button>
+                <button class="date-btn" onclick="setDate('jodoh', '22/11/1999')">22 Nov 1999</button>
+            </div>
+            <input type="text" id="jodohDate" placeholder="Atau ketik: DD/MM/YYYY">
+            <button class="ramal-btn" onclick="cekJodoh()">💖 Ramal Jodoh</button>
+            <div id="jodohResult" class="result"></div>
+        </div>
+
+        <!-- FOOTER DEVELOPER -->
+        <div class="footer">
+            <div class="developer">👨‍💻 Iman Firman</div>
+            <div class="contact"> Developer | Jakarta, Indonesia</div>
+        </div>
+    </div>
+
+    <script>
+        const khodamList = [
+            { nama: "Harimau Putih", emoji: "🐅", desc: "Pemburu bayangan malam" },
+            { nama: "Macan Tutul Mistis", emoji: "🐱", desc: "Penjaga rahasia kelam" },
+            { nama: "Buaya Sunda Purba", emoji: "🐊", desc: "Raja sungai terlarang" },
+            { nama: "Lumba-lumba Gaib", emoji: "🐬", desc: "Penyanyi samudra hening" },
+            { nama: "Ayam Jantan Gaib", emoji: "🐔", desc: "Panggilan fajar kematian" },
+            { nama: "Jasuke Angker", emoji: "🌽", desc: "Makanan para arwah" },
+            { nama: "Kuntilanak Mini", emoji: "👻", desc: "Pelindung anak kecil" },
+            { nama: "Gajah Terbang", emoji: "🐘", desc: "Pembawa harta karun" },
+            { nama: "Badarawuhi Elok", emoji: "🧞‍♀️", desc: "Penyanyi bulan purnama" },
+            { nama: "Naga Goreng Mistis", emoji: "🐲", desc: "Penjaga api abadi" }
+        ];
+
+        const jodohList = [
+            { nama: "Rina (15/08/1995)", emoji: "💃", desc: "Artis dancer profesional", match: "95%" },
+            { nama: "Andi (22/03/1998)", emoji: "⚽", desc: "Atlet sepakbola nasional", match: "92%" },
+            { nama: "Sari (09/11/1996)", emoji: "🎤", desc: "Penyanyi berbakat", match: "88%" },
+            { nama: "Budi (30/07/1994)", emoji: "💼", desc: "CEO startup unicorn", match: "91%" },
+            { nama: "Lina (18/12/1997)", emoji: "📚", desc: "Dosen universitas top", match: "89%" },
+            { nama: "Dedi (05/05/1999)", emoji: "🎮", desc: "Gamer esports pro", match: "87%" },
+            { nama: "Maya (27/09/1995)", emoji: "👩‍🔬", desc: "Ilmuwan peneliti", match: "94%" },
+            { nama: "Ricky (14/02/1996)", emoji: "❤️", desc: "Pria romantis tulen", match: "96%" }
+        ];
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tab + 'Tab').classList.add('active');
+        }
+
+        function setDate(tab, date) {
+            if (tab === 'khodam') document.getElementById('birthdate').value = date;
+            else document.getElementById('jodohDate').value = date;
+        }
+
+        function cekKhodam() {
+            const input = document.getElementById('birthdate').value.trim();
+            const result = document.getElementById('result');
+            if (!input || !/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(input)) {
+                result.innerHTML = '<div style="color:#ff6b6b">❌ Format: DD/MM/YYYY</div>';
+                return;
+            }
+            result.innerHTML = '⏳ Menghubungkan ke alam gaib...';
+            setTimeout(() => {
+                const hash = input.split('/').reduce((a, b) => a + parseInt(b), 0);
+                const index = Math.floor((hash * 9301 + 49297) % 99563) % khodamList.length;
+                const khodam = khodamList[index];
+                result.innerHTML = `
+                    <div class="emoji">${khodam.emoji}</div>
+                    <div class="khodam-name">${khodam.nama}</div>
+                    <div class="desc">${khodam.desc}</div>
+                `;
+            }, 2000);
+        }
+
+        function cekJodoh() {
+            const input = document.getElementById('jodohDate').value.trim();
+            const result = document.getElementById('jodohResult');
+            if (!input || !/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(input)) {
+                result.innerHTML = '<div style="color:#ff6b6b">❌ Format: DD/MM/YYYY</div>';
+                return;
+            }
+            result.innerHTML = '💫 Menghitung kecocokan jiwa...';
+            setTimeout(() => {
+                const hash = input.split('/').reduce((a, b) => a + parseInt(b), 0);
+                const index = Math.floor((hash * 9301 + 49297) % 99563) % jodohList.length;
+                const jodoh = jodohList[index];
+                result.innerHTML = `
+                    <div style="font-size: 50px;">💑</div>
+                    <div class="khodam-name">${jodoh.nama}</div>
+                    <div class="partner">
+                        <div class="emoji">${jodoh.emoji}</div>
+                        <div class="desc">${jodoh.desc}</div>
+                        <div class="match">Kecocokan: ${jodoh.match}</div>
+                    </div>
+                `;
+            }, 2500);
+        }
+
+        document.getElementById('birthdate').addEventListener('keypress', e => e.key === 'Enter' && cekKhodam());
+        document.getElementById('jodohDate').addEventListener('keypress', e => e.key === 'Enter' && cekJodoh());
+    </script>
+</body>
+</html>
